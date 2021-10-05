@@ -7,13 +7,13 @@ import MenuButtons from '../Components/MenuButtons'
 import Search from '../Components/Search'
 import Contact from '../Components/Contact'
 
-function Home() {
+function Home({navigation}) {
     return (
         <View style={styles.container}>
             <SafeAreaView style={{height: '100%'}}>
             <Header/>
             <Search/>
-            <MenuButtons/>
+            <MenuButtons navigation={navigation}/>
             <Contact/>
             </SafeAreaView>
         </View>

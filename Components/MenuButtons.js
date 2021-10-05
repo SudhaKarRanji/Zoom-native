@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Navigation from "../Navigation";
 
 const items = [
   {
@@ -26,12 +27,17 @@ const items = [
   },
 ];
 
-function MenuButtons() {
+function MenuButtons({ navigation }) {
+
+  const openmeet = () =>{
+    navigation.navigate("Room")
+  }
   return (
     <View style={style.container}>
       {items.map((item, index) => (
         <View key={index} style={style.buttoncontainer}>
           <TouchableOpacity 
+          onPress={() => openmeet()}
           style={{
             ...style.button,
             backgroundColor: item.customcolor ? item.customcolor : "#0470DC"
