@@ -1,42 +1,33 @@
-import React, { useState } from "react";
-import { View, TextInput, StyleSheet,Text } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React, { useState,useEffect } from "react";
+import { View, TextInput, StyleSheet, Text } from "react-native";
+import StartMeeting from "../Components/StartMeeting";
+import { io } from "socket.io-client";
 
 function MeetingRoom() {
   const [name, setname] = useState("");
   const [roomid, setroom] = useState("");
+
+  const joinroom= () => {
+    socket.emit('join-room',{ roomid: roomid, userName: name})
+
+  }
+
+useEffect(() => {
+  const API_URL="http://localhost:3001"
+  socket = io("http://localhost:3001");
+  
+  socket.on("connection", () => console.log("connected"))
+},[])
+
   return (
     <View style={styles.container}>
-      <View style={styles.meetingcontainer}>
-        <View style={styles.info}>
-          <TextInput
-            style={styles.textinput}
-            value={name}
-            placeholder="Enter Your Name"
-            placeholderTextColor="#747674"
-            onChangeText={(text) => setname(text)}
-          />
-        </View>
-        <View style={styles.info}>
-          <TextInput
-            style={styles.textinput}
-            value={roomid}
-            placeholder="Enter Room ID"
-            placeholderTextColor="#747674"
-            onChangeText={(text) => setroom(text)}
-          />
-        </View>
-        <View style={{alignItems:"center"}}>
-            <TouchableOpacity
-            style={styles.startmeet}
-            onPress={() => {}}
-            >
-                <Text style={{color:"white",fontWeight:"900"}}>
-                    Start Meeting
-                </Text>
-            </TouchableOpacity>
-        </View>
-      </View>
+      <StartMeeting
+        name={name}
+        setname={setname}
+        roomid={roomid}
+        setroom={setroom}
+        joinroom={joinroom}
+      />
     </View>
   );
 }
@@ -47,32 +38,5 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#1c1c1c",
     flex: 1,
-    
   },
-  info: {
-    width: "100%",
-    height: 50,
-    backgroundColor: "#373538",
-    borderRadius: 10,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: "#484648",
-    padding: 12,
-    justifyContent: "center",
-    marginTop:20
-  },
-  textinput: {
-    color: "white",
-    fontSize: 18,
-  },
-  meetingcontainer: {},
-  startmeet:{
-      width: 350,
-      height: 50,
-      marginTop:20,
-      justifyContent:"center",
-      alignItems:"center",
-      backgroundColor:"#0470DC",
-      borderRadius:20
-  }
 });
